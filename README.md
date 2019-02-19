@@ -1,53 +1,11 @@
-[![linuxserver.io](https://raw.githubusercontent.com/linuxserver/docker-templates/master/linuxserver.io/img/linuxserver_medium.png)](https://linuxserver.io)
+# freekers/docker-plex
 
-The [LinuxServer.io](https://linuxserver.io) team brings you another container release featuring :-
+This is a fork of linuxserver/docker-plex with a small personal customization: phantomjs (including it's dependency called 'libfontconfig') has been added to this image, for use with the FMoviesPlus.bundle
 
- * regular and timely application updates
- * easy user mappings (PGID, PUID)
- * custom base image with s6 overlay
- * weekly base OS updates with common layers across the entire LinuxServer.io ecosystem to minimise space usage, down time and bandwidth
- * regular security updates
+To setup FMoviesPlus.bundle, please refer to: https://github.com/coder-alpha/FMoviesPlus.bundle/wiki/FMoviesPlus:-Setup
+For the 'Absolute path to PhantomJS folder (folder containing the binary file)', use: /opt/phantomjs-2.1.1-linux-x86_64/bin
 
-Find us at:
-* [Discord](https://discord.gg/YWrKVTn) - realtime support / chat with the community and the team.
-* [IRC](https://irc.linuxserver.io) - on freenode at `#linuxserver.io`. Our primary support channel is Discord.
-* [Blog](https://blog.linuxserver.io) - all the things you can do with our containers including How-To guides, opinions and much more!
-* [Podcast](https://anchor.fm/linuxserverio) - on hiatus. Coming back soon (late 2018).
-
-# PSA: Changes are happening
-
-From August 2018 onwards, Linuxserver are in the midst of switching to a new CI platform which will enable us to build and release multiple architectures under a single repo. To this end, existing images for `arm64` and `armhf` builds are being deprecated. They are replaced by a manifest file in each container which automatically pulls the correct image for your architecture. You'll also be able to pull based on a specific architecture tag.
-
-TLDR: Multi-arch support is changing from multiple repos to one repo per container image.
-
-# [linuxserver/plex](https://github.com/linuxserver/docker-plex)
-[![](https://img.shields.io/discord/354974912613449730.svg?logo=discord&label=LSIO%20Discord&style=flat-square)](https://discord.gg/YWrKVTn)
-[![](https://images.microbadger.com/badges/version/linuxserver/plex.svg)](https://microbadger.com/images/linuxserver/plex "Get your own version badge on microbadger.com")
-[![](https://images.microbadger.com/badges/image/linuxserver/plex.svg)](https://microbadger.com/images/linuxserver/plex "Get your own version badge on microbadger.com")
-![Docker Pulls](https://img.shields.io/docker/pulls/linuxserver/plex.svg)
-![Docker Stars](https://img.shields.io/docker/stars/linuxserver/plex.svg)
-[![Build Status](https://ci.linuxserver.io/buildStatus/icon?job=Docker-Pipeline-Builders/docker-plex/master)](https://ci.linuxserver.io/job/Docker-Pipeline-Builders/job/docker-plex/job/master/)
-[![](https://lsio-ci.ams3.digitaloceanspaces.com/linuxserver/plex/latest/badge.svg)](https://lsio-ci.ams3.digitaloceanspaces.com/linuxserver/plex/latest/index.html)
-
-[Plex](https://plex.tv) organizes video, music and photos from personal media libraries and streams them to smart TVs, streaming boxes and mobile devices. This container is packaged as a standalone Plex Media Server. has always been a top priority. Straightforward design and bulk actions mean getting things done faster.
-*To All Arm Users* - Plex is currently transitioning to a new build system allowing everyone to ingest software releases for all popular architectures. In the mean time releases on this channel for armv7 and aarch64 will be frozen at a beta release version of 1.15, including plex pass users. For armv7 users that want a stable release please use our legacy repo [Here](https://hub.docker.com/r/lsioarmhf/plex) .
-
-[![plex](http://the-gadgeteer.com/wp-content/uploads/2015/10/plex-logo-e1446990678679.png)](https://plex.tv)
-
-## Supported Architectures
-
-Our images support multiple architectures such as `x86-64`, `arm64` and `armhf`. We utilise the docker manifest for multi-platform awareness. More information is available from docker [here](https://github.com/docker/distribution/blob/master/docs/spec/manifest-v2-2.md#manifest-list). 
-
-Simply pulling `linuxserver/plex` should retrieve the correct image for your arch, but you can also pull specific arch images via tags.
-
-The architectures supported by this image are:
-
-| Architecture | Tag |
-| :----: | --- |
-| x86-64 | amd64-latest |
-| arm64 | arm64v8-latest |
-| armhf | arm32v6-latest |
-
+The image is automatically / rebuild whenever the base image is updated on Docker Hub (i.e. linuxserver:docker-plex).
 
 ## Usage
 
@@ -67,7 +25,7 @@ docker create \
   -v </path/to/movies>:/data/movies \
   -v </path for transcoding>:/transcode \
   --restart unless-stopped \
-  linuxserver/plex
+  freekers/plex
 ```
 
 
@@ -80,7 +38,7 @@ Compatible with docker-compose v2 schemas.
 version: "2"
 services:
   plex:
-    image: linuxserver/plex
+    image: freekers/plex
     container_name: plex
     network_mode: host
     environment:
@@ -182,19 +140,19 @@ We automatically add the necessary environment variable that will utilise all th
 
 * Shell access whilst the container is running: `docker exec -it plex /bin/bash`
 * To monitor the logs of the container in realtime: `docker logs -f plex`
-* container version number 
+* container version number
   * `docker inspect -f '{{ index .Config.Labels "build_version" }}' plex`
 * image version number
-  * `docker inspect -f '{{ index .Config.Labels "build_version" }}' linuxserver/plex`
+  * `docker inspect -f '{{ index .Config.Labels "build_version" }}' freekers/plex`
 
 ## Updating Info
 
 Most of our images are static, versioned, and require an image update and container recreation to update the app inside. With some exceptions (ie. nextcloud, plex), we do not recommend or support updating apps inside the container. Please consult the [Application Setup](#application-setup) section above to see if it is recommended for the image.  
-  
+
 Below are the instructions for updating containers:  
-  
+
 ### Via Docker Run/Create
-* Update the image: `docker pull linuxserver/plex`
+* Update the image: `docker pull freekers/plex`
 * Stop the running container: `docker stop plex`
 * Delete the container: `docker rm plex`
 * Recreate a new container with the same docker create parameters as instructed above (if mapped correctly to a host folder, your `/config` folder and settings will be preserved)
@@ -202,32 +160,6 @@ Below are the instructions for updating containers:
 * You can also remove the old dangling images: `docker image prune`
 
 ### Via Docker Compose
-* Update the image: `docker-compose pull linuxserver/plex`
+* Update the image: `docker-compose pull freekers/plex`
 * Let compose update containers as necessary: `docker-compose up -d`
 * You can also remove the old dangling images: `docker image prune`
-
-## Versions
-
-* **15.02.19:** - Clean up plex pid after unclean stop.
-* **11.02.19:** - Fix nvidia variables, add device variables.
-* **16.01.19:** - Add pipeline logic, multi arch, and HW transcoding configuration; remove avahi service.
-* **07.09.18:** - Rebase to ubuntu bionic, add udev package.
-* **09.12.17:** - Fix continuation lines.
-* **12.07.17:** - Add inspect commands to README, move to jenkins build and push.
-* **28.05.17:** - Add unrar package as per requests, for subzero plugin.
-* **11.01.17:** - Use Plex environment variables from pms docker, change abc home folder to /app to alleviate usermod chowning library
-* **03.01.17:** - Use case insensitive version variable matching rather than export and make lowercase.
-* **17.10.16:** - Allow use of uppercase version variable
-* **01.10.16:** - Add TZ info to README.
-* **09.09.16:** - Add layer badges to README.
-* **27.08.16:** - Add badges to README.
-* **22.08.16:** - Rebased to xenial and s6 overlay
-* **07.04.16:** - removed `/transcode` volume support (upstream Plex change) and modified PlexPass download method to prevent unauthorised usage of paid PMS
-* **24.09.15:** - added optional support for volume transcoding (/transcode), and various typo fixes.
-* **17.09.15:** - Changed to run chmod only once
-* **19.09.15:** - Plex updated their download servers from http to https
-* **28.08.15:** - Removed plexpass from routine, and now uses VERSION as a combination fix.
-* **18.07.15:** - Moved autoupdate to be hosted by linuxserver.io and implemented bugfix thanks to ljm42.
-* **09.07.15:** - Now with ability to pick static version number.
-* **08.07.15:** - Now with autoupdates. (Hosted by fanart.tv)
-* **03.07.15:** - Fixed a mistake that allowed plex to run as user plex rather than abc (99:100). Thanks to double16 for spotting this.
