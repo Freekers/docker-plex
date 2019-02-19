@@ -4,7 +4,7 @@ This is a fork of linuxserver/docker-plex with a small personal customization: p
 
 To setup FMoviesPlus.bundle, please refer to: https://github.com/coder-alpha/FMoviesPlus.bundle/wiki/FMoviesPlus:-Setup
 
-For the 'Absolute path to PhantomJS folder (folder containing the binary file)', use: /opt/phantomjs-2.1.1-linux-x86_64/bin
+For the 'Absolute path to PhantomJS folder (folder containing the binary file)', use: `/opt/phantomjs-2.1.1-linux-x86_64/bin`
 
 The image is automatically / rebuild whenever the base image is updated on Docker Hub (i.e. linuxserver:docker-plex).
 
