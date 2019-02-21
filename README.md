@@ -2,7 +2,7 @@
 
 This is a fork of linuxserver/docker-plex with a small personal customization: phantomjs (including it's dependency called 'libfontconfig') has been added to this image, for use with the FMoviesPlus.bundle
 
-To setup FMoviesPlus.bundle, please refer to: https://github.com/coder-alpha/FMoviesPlus.bundle/wiki/FMoviesPlus:-Setup
+To setup FMoviesPlus.bundle, please refer to their Wiki: https://github.com/coder-alpha/FMoviesPlus.bundle/wiki
 
 For the 'Absolute path to PhantomJS folder (folder containing the binary file)', use: `/opt/phantomjs-2.1.1-linux-x86_64/bin`
 
